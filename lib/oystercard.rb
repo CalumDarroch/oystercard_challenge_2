@@ -19,22 +19,16 @@ class Oystercard
   end
 
   def in_journey?
-    if @entry_station == nil
-      return false
-    else
-      return true
-    end
+    @entry_station == nil ? false : true
   end
 
   def touch_in(station)
     fail "Balance below minimum" if @balance < BALANCE_MINIMUM
-    @in_journey = true
     @entry_station = station
   end
 
   def touch_out
     deduct(MINIMUM_CHARGE)
-    @in_journey = false
     @entry_station = nil
   end
 
