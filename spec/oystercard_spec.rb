@@ -47,8 +47,16 @@ describe Oystercard do
     context "when touched in" do
       it "in journey returns true" do
         oyster = Oystercard.new
+        oyster.top_up(10)
         oyster.touch_in
         expect(oyster).to be_in_journey
+      end
+    end
+
+    context "when balance is below minimum balance" do
+      it "raises an error" do
+        oyster = Oystercard.new
+        expect { oyster.touch_in }.to raise_error "Balance below minimum"
       end
     end
   end
@@ -57,6 +65,7 @@ describe Oystercard do
     context "when touched out" do
       it "in journey returns false" do
         oyster = Oystercard.new
+        oyster.top_up(10)
         oyster.touch_in
         oyster.touch_out
         expect(oyster).not_to be_in_journey
