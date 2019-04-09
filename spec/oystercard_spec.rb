@@ -35,9 +35,30 @@ describe Oystercard do
   end
 
   describe "#in_journey?" do
-    context "when not touched in" do
+    context "when new oystercard is generated it is not in journey" do
       it "returns false" do
         oyster = Oystercard.new
+        expect(oyster).not_to be_in_journey
+      end
+    end
+  end
+
+  describe "#touch_in" do
+    context "when touched in" do
+      it "in journey returns true" do
+        oyster = Oystercard.new
+        oyster.touch_in
+        expect(oyster).to be_in_journey
+      end
+    end
+  end
+
+  describe "#touch_out" do
+    context "when touched out" do
+      it "in journey returns false" do
+        oyster = Oystercard.new
+        oyster.touch_in
+        oyster.touch_out
         expect(oyster).not_to be_in_journey
       end
     end
