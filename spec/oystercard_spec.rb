@@ -2,6 +2,8 @@ require 'oystercard'
 
 describe Oystercard do
 
+  let(:station) { double :station }
+
   describe "#balance" do
     it "displays balance on Oystercard" do
       expect(subject.balance).to eq 0
@@ -36,7 +38,7 @@ describe Oystercard do
       it "in journey returns true" do
         oyster = Oystercard.new
         oyster.top_up(10)
-        oyster.touch_in
+        oyster.touch_in(station)
         expect(oyster).to be_in_journey
       end
     end
@@ -44,7 +46,15 @@ describe Oystercard do
     context "when balance is below minimum balance" do
       it "raises an error" do
         oyster = Oystercard.new
-        expect { oyster.touch_in }.to raise_error "Balance below minimum"
+        expect { oyster.touch_in(station) }.to raise_error "Balance below minimum"
+      end
+    end
+
+    context "when touching in at a station" do
+      it "records the station name it touched in at" do
+        oyster = Oystercard.new
+        oyster.top_up(10)
+        expect(oyster.touch_in(station)).to eq station
       end
     end
   end
@@ -54,7 +64,7 @@ describe Oystercard do
       it "in journey returns false" do
         oyster = Oystercard.new
         oyster.top_up(10)
-        oyster.touch_in
+        oyster.touch_in(station)
         oyster.touch_out
         expect(oyster).not_to be_in_journey
       end
@@ -63,7 +73,7 @@ describe Oystercard do
       it "some money is deducted from balance" do
         oyster = Oystercard.new
         oyster.top_up(10)
-        oyster.touch_in
+        oyster.touch_in(station)
         expect { oyster.touch_out }.to change{ oyster.balance }.by(-Oystercard::MINIMUM_CHARGE)
       end
     end
