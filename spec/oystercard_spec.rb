@@ -12,10 +12,6 @@ describe Oystercard do
     it { is_expected.to respond_to(:top_up).with(1).argument }
 
     it "tops up an Oystercard's balance from 0 to 1" do
-    # Our first test:
-      # subject.top_up(1)
-      # expect(subject.balance).to eq 1
-    # This test will pass regardless of @balance's initial value:
       expect{ subject.top_up 1 }.to change{ subject.balance }.by 1
     end
 
@@ -23,14 +19,6 @@ describe Oystercard do
       oyster = Oystercard.new
       oyster.top_up(Oystercard::BALANCE_LIMIT)
       expect {oyster.top_up(1)}.to raise_error("maximum limit = #{Oystercard::BALANCE_LIMIT}")
-    end
-  end
-
-  describe "#deduct" do
-    it "deducts an amount from the Oystercard's balance" do
-      oyster = Oystercard.new
-      oyster.top_up(10)
-      expect{ oyster.deduct(5) }.to change{ oyster.balance }.by -5
     end
   end
 
@@ -69,6 +57,14 @@ describe Oystercard do
         oyster.touch_in
         oyster.touch_out
         expect(oyster).not_to be_in_journey
+      end
+    end
+    context "when touching out" do
+      it "some money is deducted from balance" do
+        oyster = Oystercard.new
+        oyster.top_up(10)
+        oyster.touch_in
+        expect { oyster.touch_out }.to change{ oyster.balance }.by(-Oystercard::MINIMUM_CHARGE)
       end
     end
   end
