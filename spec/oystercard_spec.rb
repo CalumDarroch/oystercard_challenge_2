@@ -34,4 +34,13 @@ describe Oystercard do
     end
   end
 
+  describe "#in_journey?" do
+    context "when not touched in" do
+      it "returns false" do
+        oyster = Oystercard.new
+        expect(oyster).not_to be_in_journey
+      end
+    end
+  end
+
 end
