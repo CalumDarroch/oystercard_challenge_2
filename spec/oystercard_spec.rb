@@ -54,7 +54,7 @@ describe Oystercard do
       it "records the station name it touched in at" do
         oyster = Oystercard.new
         oyster.top_up(10)
-        expect(oyster.touch_in(station)).to eq station
+        expect(oyster.touch_in(station)).to eq( { entry: station } )
       end
     end
   end
@@ -80,7 +80,7 @@ describe Oystercard do
         oyster = Oystercard.new
         oyster.top_up(10)
         oyster.touch_in(station)
-        expect(oyster.touch_out(station)).to eq station
+        expect(oyster.touch_out(station)).to eq( [{ entry: station, exit: station}] )
       end
     end
   end
