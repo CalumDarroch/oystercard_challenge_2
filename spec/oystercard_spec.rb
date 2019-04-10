@@ -4,6 +4,13 @@ describe Oystercard do
 
   let(:station) { double :station }
 
+  describe "#initialize" do
+    it "creates an oystercard with an empty journey history" do
+      oyster = Oystercard.new
+      expect(oyster.journey_history).to be_empty
+    end
+  end
+
   describe "#balance" do
     it "displays balance on Oystercard" do
       expect(subject.balance).to eq 0
