@@ -4,7 +4,7 @@ class Oystercard
   BALANCE_MINIMUM = 1
   MINIMUM_CHARGE = 3
 
-  attr_reader :balance, :entry_station, :journey_history
+  attr_reader :balance, :journey_history
 
   def initialize
     @balance = 0
