@@ -65,7 +65,7 @@ describe Oystercard do
         oyster = Oystercard.new
         oyster.top_up(10)
         oyster.touch_in(station)
-        oyster.touch_out
+        oyster.touch_out(station)
         expect(oyster).not_to be_in_journey
       end
     end
@@ -74,7 +74,13 @@ describe Oystercard do
         oyster = Oystercard.new
         oyster.top_up(10)
         oyster.touch_in(station)
-        expect { oyster.touch_out }.to change{ oyster.balance }.by(-Oystercard::MINIMUM_CHARGE)
+        expect { oyster.touch_out(station) }.to change{ oyster.balance }.by(-Oystercard::MINIMUM_CHARGE)
+      end
+      it "records the exit station" do
+        oyster = Oystercard.new
+        oyster.top_up(10)
+        oyster.touch_in(station)
+        expect(oyster.touch_out(station)).to eq station
       end
     end
   end
