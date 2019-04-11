@@ -76,6 +76,7 @@ describe Oystercard do
         expect(oyster).not_to be_in_journey
       end
     end
+    
     context "when touching out" do
       it "some money is deducted from balance" do
         oyster = Oystercard.new
