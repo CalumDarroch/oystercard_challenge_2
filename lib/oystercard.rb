@@ -23,13 +23,14 @@ class Oystercard
 
   def touch_in(station)
     fail "Balance below minimum" if @balance < BALANCE_MINIMUM
+ #  @journey = Journey.new(entry: station)
     @journey = {}
     @journey[:entry] = station
     return @journey
   end
 
   def touch_out(station)
-    deduct(MINIMUM_CHARGE)
+    deduct(MINIMUM_CHARGE)  # move deduct to end of method, becomes deduct(journey.fare)
     @journey[:exit] = station
     @journey_history << @journey
   end
