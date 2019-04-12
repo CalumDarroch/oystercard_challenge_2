@@ -21,7 +21,7 @@ class Journey
   end
 
   def journey_complete?
-    @journey.length == 2 ? true : false
+    @journey[:entry] != nil && @journey[:exit] != nil ? true : false
   end
 
   def fare

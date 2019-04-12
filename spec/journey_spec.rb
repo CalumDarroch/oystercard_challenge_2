@@ -36,9 +36,10 @@ describe Journey do
   end
 
   describe "#journey_complete?" do
-    xit "should return an incomplete journey if there is no entry station" do
-      subject.end_journey("Farringdon")
-      expect(subject.journey_complete?).to eq false
+    it "should return an incomplete journey if there is no entry station" do
+      journey = Journey.new(nil)
+      journey.end_journey("Farringdon")
+      expect(journey.journey_complete?).to eq false
     end
     it "should return an incomplete journey if there no exit station" do
       subject.start_journey("Old Street")
